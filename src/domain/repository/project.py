@@ -21,7 +21,8 @@ class ProjectRepository(IProjectRepository):
         self.adapter = ResultSetAdapter
 
     def create(self, entity: ProjectEntity) -> None:
-        sql = f"INSERT INTO PROJECTS (NAME, KEY) VALUES ('{entity.name}', '{entity.key}')"
+        key = entity.key.replace(' ', '-').strip()
+        sql = f"INSERT INTO PROJECTS (NAME, KEY) VALUES ('{entity.name}', '{key}')"
         self.db.execute(sql, commit=True)
 
     def update(self, entity: ProjectEntity) -> None:
@@ -31,7 +32,7 @@ class ProjectRepository(IProjectRepository):
     def get_all(self) -> list[ProjectEntity]:
         sql = "SELECT NAME FROM PROJECTS"
         data = self.db.execute(sql)
-        self.adapter.list_adapter(data.fetchall())
+        return self.adapter.list_adapter(data.fetchall())
     
     def get_one(self, arg: str) -> ProjectEntity:
         sql = f"SELECT NAME FROM PROJECTS WHERE KEY='{arg}'"

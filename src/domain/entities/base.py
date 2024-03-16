@@ -1,10 +1,10 @@
-from dataclasses import dataclass, asdict
+from dataclasses import asdict
 from typing import Optional
 
 
-@dataclass
+
 class Base:
-    id: Optional[str]
+    id: Optional[str] = None
 
     def as_dict(self):
         return asdict(self)

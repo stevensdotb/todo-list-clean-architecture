@@ -3,6 +3,7 @@ from typing import TypeVar, Generic
 
 T = TypeVar("T")
 A = TypeVar("A")
+R = TypeVar("R")
 
 
 class IBase(ABC, Generic[T, A]):

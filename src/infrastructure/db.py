@@ -23,10 +23,11 @@ class Db:
     def close(self):
         self.conn.close()
 
-    def execute(self, query: str, commit: bool = False):
-        self.conn.execute(query)
+    def execute(self, sql: str, commit: bool = False):
+        self.conn.execute(sql)
 
         if commit:
+            print("Statement commited")
             self.conn.commit()
     
     
