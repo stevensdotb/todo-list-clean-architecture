@@ -28,7 +28,5 @@ class Db:
 
         if commit:
             self.conn.commit()
-        
-        self.close()
     
     
