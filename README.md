@@ -5,7 +5,7 @@ TODO cli tool applying Clean Architecture
 # Project CRUD
 todo-cli project -c "Project Name" -k "project-key"
 todo-cli project -u project-key --name "Project Name Changed"
-todo-cli -a
+todo-cli project -a
 todo-cli project set project-key
 todo-cli project rm project-key
 

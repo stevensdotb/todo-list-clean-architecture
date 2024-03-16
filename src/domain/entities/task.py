@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 from src.domain.entities.base import Base
 
-@dataclass
+@dataclass(kw_only=True)
 class TaskEntity(Base):
     title: str
     description: str

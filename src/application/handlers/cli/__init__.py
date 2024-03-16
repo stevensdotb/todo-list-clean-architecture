@@ -1,7 +1,7 @@
 import typer
 
 from src.infrastructure.db import Db
-import src.application.handlers.project as project
+import src.application.handlers.cli.project as project
 
 
 app = typer.Typer(name="TODO CLI Application", no_args_is_help=True)

@@ -11,4 +11,5 @@ class DatasetAdapter(Generic[T]):
         return self.entity(**data)
     
     def many(self, data) -> list[T]:
-        return [self.entity(**items) for items in data]
+        print(self.entity.as_dict())
+        return [self.entity(**row) for row in data]

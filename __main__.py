@@ -3,6 +3,6 @@ import typer
 
 if __name__ == "__main__":
     
-    from src.application.handlers.main import app
+    from src.application.handlers.cli import app
     
     app()

@@ -20,14 +20,20 @@ class ProjectRepository(IProjectRepository):
         self.db.execute(sql, commit=True)
     
     def get_all(self) -> list[ProjectEntity]:
-        sql = "SELECT NAME FROM PROJECTS"
-        data = self.db.execute(sql)
-        return self.data_adapter.many(data.fetchall())
+        sql = "SELECT ID, NAME, KEY FROM PROJECTS"
+        
+        if data := self.db.execute(sql):
+            return self.data_adapter.many(data.fetchall())
+        
+        return None
     
     def get_one(self, arg: str) -> ProjectEntity:
         sql = f"SELECT NAME FROM PROJECTS WHERE KEY='{arg}'"
-        data = self.db.execute(sql)
-        return self.data_adapter.one(data.fetchone())
+        
+        if data := self.db.execute(sql):
+            return self.data_adapter.one(data.fetchone())
+        
+        return None
     
     def delete(self, arg: str) -> None:
         sql = f"DELETE FROM PROJECTS WHERE KEY='{arg}'"

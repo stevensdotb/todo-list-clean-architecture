@@ -24,4 +24,3 @@ class ProjectUseCase(BaseUseCase[ProjectRepository], IProjectRepository):
 
     def delete(self, arg: str) -> None:
         self.repository.delete(arg)
-
