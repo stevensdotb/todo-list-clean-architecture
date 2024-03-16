@@ -32,12 +32,12 @@ class ProjectRepository(IProjectRepository):
     def get_all(self) -> list[ProjectEntity]:
         sql = "SELECT NAME FROM PROJECTS"
         data = self.db.execute(sql)
-        return self.adapter.list_adapter(data.fetchall())
+        return self.adapter.many(data.fetchall())
     
     def get_one(self, arg: str) -> ProjectEntity:
         sql = f"SELECT NAME FROM PROJECTS WHERE KEY='{arg}'"
         data = self.db.execute(sql)
-        return self.adapter.single_adapter(data.fetchone())
+        return self.adapter.one(data.fetchone())
     
     def delete(self, arg: str) -> None:
         sql = f"DELETE FROM PROJECTS WHERE KEY='{arg}'"
