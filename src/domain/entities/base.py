@@ -1,14 +1,13 @@
-from dataclasses import asdict
-from typing import Optional
+from dataclasses import asdict, dataclass
 
 
-
+@dataclass(kw_only=True)
 class Base:
-    id: Optional[str] = None
-
+    id: int
+    
     def as_dict(self):
         return asdict(self)
-    
+
     def columns(self):
-        return self.to_dict(self).keys()
+        return self.as_dict(self).keys()
 

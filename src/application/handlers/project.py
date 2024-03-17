@@ -1,5 +1,6 @@
 from src.application.use_cases.project import ProjectUseCase
 from src.domain.entities.project import ProjectEntity
+from src.domain.entities.todo_list import TodoListEntity
 from src.domain.repository.project import ProjectRepository
 
 
@@ -14,8 +15,18 @@ class ProjectHandler():
         self.use_case.create(entity)
 
     def list_projects(self):
-        if data := self.use_case.get_all() is not None:
+        data = self.use_case.get_all()
+        if data:
             for project in data:
-                print(f"[{project.id}] {project.name}")
+                print(f"[{project.id}] {project.name} -> ({project.key})")
         else:
             print("~ No projects created yet")
+    
+    def list_project_todos(self, key):
+        data = self.use_case.get_children(key)
+        print("TODO Projects:")
+        if data:
+            for todo in data:
+                print(f"  [{todo.id}] {todo.name}")
+        else:
+            print("~ No TODO Project created yet.")

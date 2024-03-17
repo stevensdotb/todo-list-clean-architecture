@@ -3,18 +3,20 @@ TODO cli tool applying Clean Architecture
 
 ```bash
 # Project CRUD
-todo-cli project -c "Project Name" -k "project-key"
+todo-cli project -c "Project Name" -k project-key
 todo-cli project -u project-key --name "Project Name Changed"
-todo-cli project -a
+todo-cli project -k "project-key" --todos
+todo-cli project --list
 todo-cli project set project-key
 todo-cli project rm project-key
 
 # Todo List
-todo-cli list -c "New List Created"
-todo-cli list -u "List Update Name"
-todo-cli list -a
-todo-cli list set "List Selected"
-todo-cli list rm "TODO List deleted"
+todo-cli todo -c "New List Created"
+todo-cli todo -u "List Update Name"
+todo-cli todo -a
+todo-cli todo set "List Selected"
+todo-cli todo rm "TODO List deleted"
+todo-cli todo tasks
 
 # Task
 todo-cli task -c "Task created" -d "Task Description"

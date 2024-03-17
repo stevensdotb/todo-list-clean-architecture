@@ -7,3 +7,4 @@ class TaskEntity(Base):
     title: str
     description: str
     completed: bool
+    todo_list_id: int

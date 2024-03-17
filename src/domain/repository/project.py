@@ -1,7 +1,11 @@
+from typing import override
+
 from src.domain.entities.project import ProjectEntity
+from src.domain.entities.todo_list import TodoListEntity
 from src.domain.interfaces.project_repo import IProjectRepository
-from src.infrastructure.db import Db
 from src.domain.repository.adapter import DatasetAdapter
+from src.infrastructure.db import Db
+from src.shared.sql import sql_select, sql_where, sql_join
 
 
 class ProjectRepository(IProjectRepository):
@@ -20,18 +24,42 @@ class ProjectRepository(IProjectRepository):
         self.db.execute(sql, commit=True)
     
     def get_all(self) -> list[ProjectEntity]:
-        sql = "SELECT ID, NAME, KEY FROM PROJECTS"
+        sql = sql_select.format(columns="ID, NAME, KEY", table="PROJECTS")
         
         if data := self.db.execute(sql):
-            return self.data_adapter.many(data.fetchall())
+            data_dict = [
+                {column: row[column] for column in row.keys()}
+                for row in data.fetchall()
+            ]
+            return self.data_adapter.many(data_dict)
+        
+        return None
+    
+    def get_children(self, key) -> list[TodoListEntity]:
+        sql = sql_join.format(
+            columns="tl.*",
+            table_1="projects as p",
+            table_2="todo_lists as tl",
+            join_filter="tl.project_id = p.id"
+        ) + " " + sql_where.format(filter=f"p.key='{key}'")
+
+        if data := self.db.execute(sql):
+            data_adapter = DatasetAdapter(TodoListEntity)
+            data_dict = [
+                {column: row[column] for column in row.keys()}
+                for row in data.fetchall()
+            ]
+            return data_adapter.many(data_dict)
         
         return None
     
     def get_one(self, arg: str) -> ProjectEntity:
-        sql = f"SELECT NAME FROM PROJECTS WHERE KEY='{arg}'"
+        sql = sql_select.format(columns="ID, NAME, KEY", table="PROJECTS") \
+            + " " + sql_where.format(filter=f"KEY='{arg}'")
         
         if data := self.db.execute(sql):
-            return self.data_adapter.one(data.fetchone())
+            data_dict = {column: data[column] for column in data.fetchone().keys()}
+            return self.data_adapter.one(data_dict)
         
         return None
     

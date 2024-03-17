@@ -19,6 +19,10 @@ class IBase(ABC, Generic[T, A]):
     @abstractmethod
     def get_all(self) -> list[T]:
         raise NotImplementedError()
+
+    @abstractmethod
+    def get_children(self):
+        raise NotImplementedError
     
     @abstractmethod
     def get_one(self, arg: A) -> T:

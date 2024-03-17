@@ -9,9 +9,16 @@ handler = ProjectHandler()
 
 
 @app.callback(invoke_without_command=True)
-def main(all: Annotated[bool, typer.Option("--all", "-a", help="Show all projects")] = False):
+def main(
+    all: Annotated[bool, typer.Option("--all", help="List all projects")] = False,
+    key: Annotated[str, typer.Option("--key", "-k", help="Project Key")] = None
+):
     if all:
         handler.list_projects()
+        raise typer.Exit()
+
+    if key:
+        handler.list_project_todos(key)
 
 
 @app.command()
