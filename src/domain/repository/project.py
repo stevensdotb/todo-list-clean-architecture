@@ -20,13 +20,13 @@ class ProjectRepository(IProjectRepository):
         self.db.execute(sql, commit=True)
 
     def update(self, entity: ProjectEntity) -> None:
-        sql = f"UPDATE PROJECTS SET {entity.columns()[0]}='{entity.name}'"
+        sql = f"UPDATE PROJECTS SET NAME='{entity.name}' WHERE KEY='{entity.key}'"
         self.db.execute(sql, commit=True)
     
     def get_all(self) -> list[ProjectEntity]:
         sql = sql_select.format(columns="ID, NAME, KEY", table="PROJECTS")
-        
-        if data := self.db.execute(sql):
+        data = self.db.execute(sql)
+        if data:
             data_dict = [
                 {column: row[column] for column in row.keys()}
                 for row in data.fetchall()
@@ -43,11 +43,12 @@ class ProjectRepository(IProjectRepository):
             join_filter="tl.project_id = p.id"
         ) + " " + sql_where.format(filter=f"p.key='{key}'")
 
-        if data := self.db.execute(sql):
+        data = self.db.execute(sql).fetchall()
+        if data:
             data_adapter = DatasetAdapter(TodoListEntity)
             data_dict = [
                 {column: row[column] for column in row.keys()}
-                for row in data.fetchall()
+                for row in data
             ]
             return data_adapter.many(data_dict)
         
@@ -56,9 +57,10 @@ class ProjectRepository(IProjectRepository):
     def get_one(self, arg: str) -> ProjectEntity:
         sql = sql_select.format(columns="ID, NAME, KEY", table="PROJECTS") \
             + " " + sql_where.format(filter=f"KEY='{arg}'")
-        
-        if data := self.db.execute(sql):
-            data_dict = {column: data[column] for column in data.fetchone().keys()}
+
+        data = self.db.execute(sql).fetchone()
+        if data:
+            data_dict = {column: data[column] for column in data.keys()}
             return self.data_adapter.one(data_dict)
         
         return None

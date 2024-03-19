@@ -8,7 +8,7 @@ class DatasetAdapter(Generic[T]):
         self.entity = entity
 
     def one(self, data) -> T:
-        return self.entity(*data)
+        return self.entity(**data)
     
     def many(self, data) -> list[T]:
         return [self.entity(**row) for row in data]

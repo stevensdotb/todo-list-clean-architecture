@@ -11,8 +11,20 @@ class ProjectHandler():
     
     def create_project(self, name, key):
         print(f"~ Creating project: {name.title()} -> Key access: {key}")
-        entity = ProjectEntity(name, key)
+        entity = ProjectEntity(name=name, key=key)
         self.use_case.create(entity)
+
+    def update_project(self, key, new_name):
+        entity = ProjectEntity(id=0, name=new_name, key=key)
+        self.use_case.update(entity)
+        print(f"~ Project updated: [{entity.key}] -> {entity.name}")
+
+    def get_project(self, key):
+        data = self.use_case.get_one(key)
+        if data:
+            return data
+        
+        return None
 
     def list_projects(self):
         data = self.use_case.get_all()
@@ -30,3 +42,13 @@ class ProjectHandler():
                 print(f"  [{todo.id}] {todo.name}")
         else:
             print("~ No TODO Project created yet.")
+    
+    def set_project(self, key):
+        with open(".todo-project", "w") as file:
+            file.write(key)
+    
+    def read_project_active(self):
+        with open(".todo-project", "r") as file:
+            active = file.readlines()[0].strip().replace(" ", "")
+        
+        return active
