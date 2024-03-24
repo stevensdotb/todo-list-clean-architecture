@@ -2,13 +2,13 @@
 TODO cli tool applying Clean Architecture
 
 ### Projects
-- [x] `todo-cli projects create "Project Name" project-key`
+- [x] `todo-cli projects create "Project Name" --key project-key`
 - [x] `todo-cli projects update project-key "Project Name Changed"`
 - [x] `todo-cli projects -k "project-key"`
 - [x] `todo-cli projects --all`
 - [x] `todo-cli projects set project-key`
 - [x] `todo-cli projects --active`
-- [ ] `todo-cli projects rm project-key`
+- [x] `todo-cli projects rm project-key`
 
 ### Todo List
 - [ ] `todo-cli todo create "New List Created"`
