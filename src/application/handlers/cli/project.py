@@ -26,7 +26,7 @@ def main(
 
 
 @app.command()
-def create(name: str, key: Annotated[str, typer.Argument("key", help="Project key identifier")]):
+def create(name: str, key: Annotated[str, typer.Option("key", help="Project key identifier")] = None):
     
     if name and not key:
         raise typer.BadParameter("Missing project [key] identifier. Use -k option to provide it")
@@ -42,13 +42,8 @@ def update(
 
 @app.command()
 def set(key: Annotated[str, typer.Argument("key", help="Project Key")]):
-    project = handler.get_project(key)
-    if project:
-        handler.set_project(key)
-        print(f"Project active: {handler.read_project_active()}")
-    else:
-        print("~ Project not found or does not exist.")
+    handler.set_project(key)    
 
 @app.command()
-def rm():
-    ...
+def rm(key: Annotated[str, typer.Argument("key", help="Project Key")]):
+    handler.delete_project(key)

@@ -3,7 +3,7 @@ projects = """
     `id` integer PRIMARY KEY,
     `name` varchar(255),
     `key` varchar(255) UNIQUE,
-    FOREIGN KEY(`id`) REFERENCES todo_lists (`project_id`)
+    FOREIGN KEY(`id`) REFERENCES todo_lists (`project_id`) ON DELETE CASCADE
     )
 """
 
@@ -12,7 +12,7 @@ todo_list = """
     `id` integer PRIMARY KEY,
     `name` varchar(255),
     `project_id` integer,
-    FOREIGN KEY(`id`) REFERENCES tasks (`todo_list_id`)
+    FOREIGN KEY(`id`) REFERENCES tasks (`todo_list_id`) ON DELETE CASCADE
     )
 """
 
