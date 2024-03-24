@@ -1,7 +1,6 @@
-from typing import Generic
 from src.domain.interfaces.project_repo import IProjectRepository
 from src.domain.entities.project import ProjectEntity
-from src.domain.entities.todo_list import TodoListEntity
+from src.domain.entities.task import TaskEntity
 from src.domain.repository.project import ProjectRepository
 from src.application.use_cases.base import BaseUseCase
 
@@ -20,7 +19,7 @@ class ProjectUseCase(BaseUseCase[ProjectRepository], IProjectRepository):
     def get_all(self) -> list[ProjectEntity]:
         return self.repository.get_all()
 
-    def get_children(self, key: str) -> TodoListEntity:
+    def get_children(self, key: str) -> TaskEntity:
         return self.repository.get_children(key)
     
     def get_one(self, arg: str) -> ProjectEntity:

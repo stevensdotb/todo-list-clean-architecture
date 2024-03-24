@@ -1,7 +1,7 @@
 from typing import override
 
 from src.domain.entities.project import ProjectEntity
-from src.domain.entities.todo_list import TodoListEntity
+from src.domain.entities.task import TaskEntity
 from src.domain.interfaces.project_repo import IProjectRepository
 from src.domain.repository.adapter import DatasetAdapter
 from src.infrastructure.db import Db
@@ -35,17 +35,17 @@ class ProjectRepository(IProjectRepository):
         
         return None
     
-    def get_children(self, key) -> list[TodoListEntity]:
+    def get_children(self, key) -> list[TaskEntity]:
         sql = sql_join.format(
             columns="tl.*",
             table_1="projects as p",
-            table_2="todo_lists as tl",
-            join_filter="tl.project_id = p.id"
+            table_2="tasks as tks",
+            join_filter="tks.project_id = p.id"
         ) + " " + sql_where.format(filter=f"p.key='{key}'")
 
         data = self.db.execute(sql).fetchall()
         if data:
-            data_adapter = DatasetAdapter(TodoListEntity)
+            data_adapter = DatasetAdapter(TaskEntity)
             data_dict = [
                 {column: row[column] for column in row.keys()}
                 for row in data

@@ -6,7 +6,7 @@ A = TypeVar("A")
 R = TypeVar("R")
 
 
-class IBase(ABC, Generic[T, A]):
+class IBase(ABC, Generic[T]):
     
     @abstractmethod
     def create(self, entity: T) -> None:
@@ -22,12 +22,12 @@ class IBase(ABC, Generic[T, A]):
 
     @abstractmethod
     def get_children(self):
-        raise NotImplementedError
+        ...
     
     @abstractmethod
-    def get_one(self, arg: A) -> T:
+    def get_one(self, key: str) -> T:
         raise NotImplementedError()
     
     @abstractmethod
-    def delete(self, arg: A) -> None:
+    def delete(self, key: str) -> None:
         raise NotImplementedError()

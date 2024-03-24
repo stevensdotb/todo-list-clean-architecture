@@ -2,7 +2,6 @@ from typer import Exit
 
 from src.application.use_cases.project import ProjectUseCase
 from src.domain.entities.project import ProjectEntity
-from src.domain.entities.todo_list import TodoListEntity
 from src.domain.repository.project import ProjectRepository
 
 
@@ -60,11 +59,14 @@ class ProjectHandler():
         
         print(f"Project active: {self.read_project_active()}")
     
-    def read_project_active(self):
-        with open(".todo-project", "r") as file:
-            active = file.readlines()[0].strip().replace(" ", "")
-        
-        return active
+    @staticmethod
+    def read_project_active():
+        try:
+            with open(".todo-project", "r") as file:
+                active = file.readlines()[0].strip().replace(" ", "")
+            return active
+        except IndexError:
+            return None
 
     def delete_project(self, key):
         active_project = self.read_project_active()
