@@ -10,8 +10,8 @@ class TaskHandler():
     def __init__(self):
         self.use_case = TaskUseCase(TaskRepository)
     
-    def create_task(self, name, key):
-        entity = TaskEntity(name=name, key=key)
+    def create_task(self, name, key, project_id):
+        entity = TaskEntity(name=name, key=key, project_id=project_id)
         self.use_case.create(entity)
         print(f"~ Task Created: {entity.title} -> Key access: {key}")
 
