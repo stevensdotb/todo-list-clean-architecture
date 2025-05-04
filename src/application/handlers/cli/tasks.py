@@ -10,7 +10,7 @@ handler = TaskHandler()
 
 @app.callback(invoke_without_command=True)
 def main(
-    all: Annotated[bool, typer.Option("--all", help="List all projects")] = False
+    all: Annotated[bool, typer.Option("--all", help="List all task")] = False
 ):
     if all:
         handler.list_tasks()
@@ -29,15 +29,11 @@ def create(
 
 @app.command()
 def update(
-    key: Annotated[str, typer.Argument("key", help="Project Key")],
-    name: Annotated[str, typer.Argument("name", help="New Project name")]
+    key: Annotated[str, typer.Argument("key", help="Task Key")],
+    name: Annotated[str, typer.Argument("name", help="New Task name")]
 ):
-    handler.update_project(key, name)
+    handler.update_task(key, name)  
 
 @app.command()
-def set(key: Annotated[str, typer.Argument("key", help="Project Key")]):
-    handler.set_project(key)    
-
-@app.command()
-def rm(key: Annotated[str, typer.Argument("key", help="Project Key")]):
-    handler.delete_project(key)
+def rm(key: Annotated[str, typer.Argument("key", help="Task Key")]):
+    handler.delete_task(key)
